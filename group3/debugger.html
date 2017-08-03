@@ -1,0 +1,76 @@
+.triangle{
+   width: 56%;
+   height: 0;
+   padding-left: 45%;
+   padding-top: 45%;
+   overflow: hidden;
+}
+.triangle div {
+   width: 0; 
+   height: 0;
+   margin-left:-500px;
+   margin-top:-500px;
+   border-left: 500px solid transparent;
+   border-right: 500px solid transparent;
+   border-top: 500px solid #4679BD;
+}
+.btn {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    color: white;
+    background: gray;
+    line-height: 50px;
+    text-decoration: none;
+}
+.btn:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-width: 10px 50px 0 50px;
+    border-style: solid;
+    border-color: gray transparent transparent transparent;   
+}
+.top-web{
+   position: relative;
+   height: 500px;
+   margin-right: 0;
+   margin-left: 0;
+}
+.top-web:before{
+ width:50%;
+   height:;
+   border-top: 750px solid #f15a23;
+   border-right: 1200px solid transparent;
+  position: absolute;
+  z-index: -1;
+  display: block;
+}
+<?php 
+if (isset($_POST['register_btn'])) {
+session_start();
+$firstname=mysqli_real_escape_string($conn,$_POST['firstname']);
+$lastname=mysqli_real_escape_string($conn,$_POST['lastname']);
+$email=mysqli_real_escape_string($conn,$_POST['email']);
+$password=mysqli_real_escape_string($conn,$_POST['password']);
+$password2=mysqli_real_escape_string($conn,$_POST['password2']);
+$sql="INSERT INTO signup(firstname,lastname,email,password) VALUES({'$firstname'},{'$lastname'},{'$email'},{'$password'})";
+   $result= mysqli_query($conn,$sql);
+
+   if ($password==$password2) {
+    $password=md5($password);
+    
+    $_SESSION['message']="you are now logged in";
+    $_SESSION['firstname']=$firstname;
+    header("location:student_login.php");
+
+   }else{
+    $_SESSION['message']="The two paswords do not match";
+   }
+}
+ ?>
